@@ -1,6 +1,7 @@
 //Handle http requests
 package com.lance.jobtracker;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,28 +15,38 @@ public class ApplicationController {
     }
 
     @PostMapping("/applications")
-    public Application createApplication(@RequestBody Application applications){
-        return applicationService.createApplication(applications);
+    public ResponseEntity<Application> createApplication(@RequestBody Application applications){
+        return ResponseEntity.status(201).body(applicationService.createApplication(applications));
     }
 
     @GetMapping("/applications/{id}")
-    public Application readApplication(@PathVariable Long id){
-        return applicationService.readApplication(id);
+    public ResponseEntity<Application> readApplication(@PathVariable Long id){
+        if(applicationService.readApplication(id) == null){
+            return ResponseEntity.notFound().build(); //404
+        }
+        return ResponseEntity.ok(applicationService.readApplication(id)); //200
     }
 
     @PutMapping("/applications/{id}")
-    public Application updateApplication(@PathVariable Long id, @RequestBody Application applications){
-        return applicationService.updateApplication(id, applications);
+    public ResponseEntity<Application> updateApplication(@PathVariable Long id, @RequestBody Application applications){
+        if(applicationService.readApplication(id) == null){
+            return ResponseEntity.notFound().build(); //404
+        }
+        return ResponseEntity.ok(applicationService.updateApplication(id, applications));
     }
 
     @DeleteMapping("/applications/{id}")
-    public void deleteApplication(@PathVariable Long id){
+    public ResponseEntity<Void> deleteApplication(@PathVariable Long id){
+        if(applicationService.readApplication(id) == null){
+            return ResponseEntity.notFound().build(); //404
+        }
         applicationService.deleteApplication(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/applications")
-    public List<Application> getAllApplications(){
-        return applicationService.getAllApplications();
+    public ResponseEntity<List<Application>> getAllApplications(){
+        return ResponseEntity.ok(applicationService.getAllApplications());
     }
 
     @GetMapping("/test")

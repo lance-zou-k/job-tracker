@@ -26,6 +26,7 @@ public class ApplicationService {
     }
 
     public Application updateApplication(Long id, Application updatedApplication) {
+        updatedApplication.setId(id);
         applications.put(id, updatedApplication);
         return updatedApplication;
     }
