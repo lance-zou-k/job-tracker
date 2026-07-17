@@ -5,38 +5,35 @@
 package com.lance.jobtracker;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ApplicationService {
-    private Map<Long, Application> applications = new HashMap<>();
-    private Long nextId = 1L;
+    private final ApplicationRepository applicationRepository;
+
+    public ApplicationService(ApplicationRepository applicationRepository){
+        this.applicationRepository = applicationRepository;
+    }
 
     public Application createApplication(Application application){
-        application.setId(nextId);
-        applications.put(nextId, application);
-        nextId++;
-        return application;
+        return applicationRepository.save(application);
     }
+
     public Application readApplication(Long id){
-        return applications.get(id);
+        return applicationRepository.findById(id).orElse(null);
     }
 
     public Application updateApplication(Long id, Application updatedApplication) {
         updatedApplication.setId(id);
-        applications.put(id, updatedApplication);
-        return updatedApplication;
+        return applicationRepository.save(updatedApplication);
     }
 
     public void deleteApplication(Long id){
-        applications.remove(id);
+        applicationRepository.deleteById(id);
     }
 
     //get all for dashboard & table to show every application.
     public List<Application> getAllApplications() {
-        return new ArrayList<>(applications.values());
+        return applicationRepository.findAll();
     }
 }
