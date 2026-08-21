@@ -13,8 +13,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "applications")
 public class Application {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private User user;
     private Long id;
     private String companyName;
     private String role;
