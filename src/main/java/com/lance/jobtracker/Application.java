@@ -1,13 +1,16 @@
 package com.lance.jobtracker;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Data   //generates getters, setters, toString() etc.
+//@Data   generates getters, setters, toString() etc.
+//changes: it conflicted with JPA's @ManyToOne, replacing @Data with getter and setter.
+@Getter
+@Setter
 @AllArgsConstructor     //generates constructor
 @NoArgsConstructor
 @Entity
@@ -15,9 +18,9 @@ import java.time.LocalDate;
 public class Application {
     @ManyToOne
     @JoinColumn(name = "user_id")
+    private User user;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private User user;
     private Long id;
     private String companyName;
     private String role;
