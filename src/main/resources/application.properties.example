@@ -2,10 +2,11 @@ spring.application.name=jobtracker
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/jobtracker
 spring.datasource.username=postgres
-spring.datasource.password=724334465
+spring.datasource.password=CHANGE_ME
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 
-jwt.secret=wjen2355njbqpoPPnvjdmznxlalkjdsfhqweroiuy7892346xcvbjkhgsqoweiurasdf
+# Use a long random string (32+ characters)
+jwt.secret=CHANGE_ME
